@@ -1,0 +1,10 @@
+*,v
+*.swp
+/LoremIpsumPlugin.md5
+/LoremIpsumPlugin.sha1
+/LoremIpsumPlugin.tgz
+/LoremIpsumPlugin.txt
+/LoremIpsumPlugin.zip
+/LoremIpsumPlugin_installer
+/LoremIpsumPlugin_installer.pl
+

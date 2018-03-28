@@ -1,0 +1,120 @@
+%META:TOPICINFO{author="ProjectContributor" comment="reprev" date="1522227136" format="1.1" version="1"}%
+---+!! %TOPIC%
+%FORMFIELD{"Description"}%
+
+%TOC%
+
+---++ Description
+
+This plugin allows you to generate dummy text and images of various kinds. There are a couple of text collections from which to pull out random fragments such as:
+
+   * classic
+   * buzzwords
+   * cicero
+   * client
+   * office
+   * pulpfiction
+
+Additional corpoa may be added to the =loremipsum= template.
+
+In addition, this plugin allows to have placeholder images as well using the [[https://source.unsplash.com/][unsplash image service]]. See the examples below.
+
+---++ What is Lorem Ipsum
+
+Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus !PageMaker including versions of Lorem Ipsum.
+
+---++ Usage
+
+=%<nop>LOREM{&lt;params>}%=
+
+| *Parameter* | *Description* | *Default* |
+| =type= | output type. possible values are: <ul> \
+            <li> =word=: a single random word </li> \
+            <li> =words=: a list of =num= words</li> \
+            <li> =headline=: a list of words with at least =min= and at at most =max= words, upper-caseing the first word </li> \
+            <li> =sentence=: a random sentence </li> \
+            <li> =sentences=: a list of =num= sentences </li> \
+            <li> =paragraph=: a list of =min= to =max= sentences </li> \
+            <li> =paragraphs=: a list of =num= paragraphs </li> \
+            <li> =image=: generates an &lt;img ...> tag using https://source.unsplash.com </li> \
+            </ul> | paragraph |
+| =corpus= | name of word list as defined in the =loremipsum= template; known default corpus are: \
+            =buzzwords=, \
+            =cicero=, \
+            =classic=, \
+            =client= \
+            =kafka=, \
+            =office=, \
+            =pulpfiction= | =classic= | 
+| =num= | number of items; applies to =words=, =sentences=, =paragraphs= | 3 |
+| =min= | minimum number of items to be selected; applies to =headline=, =sentences=, =paragraph= | headline: 3, sentences: 4, paragraph 5 |
+| =max= | maximum number of items to be selected randomly; applies to =headline=, =sentences=, =paragraph= | headline: 7, sentences: 9, paragraph 10 |
+| =width= | image width | 240 |
+| =height= | image height | 160 |
+| =style= | local css styles for the &lt;img ...> tag | |
+| =search= | comma separated search terms for the kind of image to return |  |
+| =class= | css class | loremImage |
+| =align= | alignment of image, can be =left=, =right=, =center= | |
+| =alt= | alt attribute of image | category and geometry of image |
+| =title= | title attribute of image | =alt= |
+
+---++ Examples
+
+%IF{"context LoremIpsumPluginEnabled" 
+   then="$percntINCLUDE{\"%WEB%.%TOPIC%\" section=\"examples\"}$percnt"
+   else="<div class='foswikiAlert'>Sorry, not installed yet.</div>"
+}%
+
+<verbatim class="foswikiHidden">
+%STARTSECTION{"examples"}%
+%JQREQUIRE{"loader"}%
+<form action="%SCRIPTURLPATH{"view"}%/%WEB%/%TOPIC%#Examples">
+
+*Corpus:* <select name="corpus" class="foswikiSelect">
+<option %IF{"$'URLPARAM{corpus}'='classic'" then="selected"}%>classic</option>
+<option %IF{"$'URLPARAM{corpus}'='buzzwords'" then="selected"}%>buzzwords</option>
+<option %IF{"$'URLPARAM{corpus}'='cicero'" then="selected"}%>cicero</option>
+<option %IF{"$'URLPARAM{corpus}'='client'" then="selected"}%>client</option>
+<option %IF{"$'URLPARAM{corpus}'='kafka'" then="selected"}%>kafka</option>
+<option %IF{"$'URLPARAM{corpus}'='office'" then="selected"}%>office</option>
+<option %IF{"$'URLPARAM{corpus}'='pulpfiction'" then="selected"}%>pulpfiction</option>
+</select>
+<button class='foswikiButton' type="submit" onclick="jQuery('.myloader1').trigger('refresh', {params: {'corpus':this.form.corpus.value}});return false;">Reload</button>
+
+<div class="jqLoader myloader1" data-section="lorem" data-placeholder=""></div>
+
+%LOREM{type="image" class="foswikiLeft"}%
+%LOREM{type="image" search="nature" class="foswikiLeft"}%
+%LOREM{type="image" search="people" class="foswikiLeft"}%
+%LOREM{type="image" search="city" class="foswikiLeft"}%
+%LOREM{type="image" search="fruits" class="foswikiLeft"}%
+%LOREM{type="image" search="water" class="foswikiLeft"}%
+%CLEAR%
+
+</verbatim>
+
+<verbatim class="foswikiHidden">
+%STARTSECTION{"lorem"}%%LOREM{type="paragraph" corpus="%URLPARAM{"corpus"}%"}%%ENDSECTION{"lorem"}%
+</verbatim>
+
+---++ Installation Instructions
+%$INSTALL_INSTRUCTIONS%
+
+---++ Dependencies
+%$DEPENDENCIES%
+
+---++ Change History
+
+%TABLE{columnwidths="7em" tablewidth="100%"}%
+| 28 Mar 2018 | initial release |
+
+%META:FORM{name="PackageForm"}%
+%META:FIELD{name="Author" title="Author" value="Michael Daum"}%
+%META:FIELD{name="Version" title="Version" value="%25$VERSION%25"}%
+%META:FIELD{name="Release" title="Release" value="%25$RELEASE%25"}%
+%META:FIELD{name="Description" title="Description" value="%25$SHORTDESCRIPTION%25"}%
+%META:FIELD{name="Repository" title="Repository" value="https://github.com/foswiki/%25TOPIC%25"}%
+%META:FIELD{name="Copyright" title="Copyright" value="&copy; 2018 Michael Daum http://michaeldaumconsulting.com"}%
+%META:FIELD{name="License" title="License" value="[[http://www.gnu.org/licenses/gpl.html][GPL (Gnu General Public License)]]"}%
+%META:FIELD{name="Home" title="Home" value="Foswiki:Extensions/%25TOPIC%25"}%
+%META:FIELD{name="Support" title="Support" value="Foswiki:Support/%25TOPIC%25"}%
