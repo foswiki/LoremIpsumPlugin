@@ -1,6 +1,6 @@
 # Plugin for Foswiki - The Free and Open Source Wiki, http://foswiki.org/
 #
-# LoremIpsumPlugin is Copyright (C) 2013-2018 Michael Daum http://michaeldaumconsulting.com
+# LoremIpsumPlugin is Copyright (C) 2013-2022 Michael Daum http://michaeldaumconsulting.com
 #
 # Inspired by Text::Lorem Copyright (C) 2003 Fotango Ltd.
 #
@@ -26,10 +26,6 @@ use Error qw(:try);
 use constant TRACE => 0; # toggle me
 use constant DEFAULT_CORPUS => 'classic';
 
-sub writeDebug {
-  print STDERR "LoremIpsumPlugin::Core - $_[0]\n" if TRACE;
-}
-
 sub new {
   my $class = shift;
 
@@ -38,6 +34,13 @@ sub new {
   }, $class);
 
   return $this;
+}
+
+sub finish {
+  my $this = shift;
+
+  undef $this->{wordlist};
+  undef $this->{sentences};
 }
 
 sub LOREM {
@@ -129,6 +132,7 @@ sub handle_sentence {
   my ($this, $params) = @_;
 
   my $sentence = $this->_sentences($params->{corpus})->[int(rand($this->_numSentences($params->{corpus})))];
+  $sentence =~ s/\n/ /g; # strip off newlines in sentences
   
   $sentence = ucfirst($sentence);
 
@@ -253,5 +257,10 @@ sub handle_image {
 
   return $format;
 }
+
+sub _writeDebug {
+  print STDERR "LoremIpsumPlugin::Core - $_[0]\n" if TRACE;
+}
+
 
 1;
