@@ -1,4 +1,4 @@
-%META:TOPICINFO{author="ProjectContributor" comment="reprev" date="1522227136" format="1.1" version="1"}%
+%META:TOPICINFO{author="ProjectContributor" comment="reprev" date="1712157058" format="1.1" version="1"}%
 ---+!! %TOPIC%
 %FORMFIELD{"Description"}%
 
@@ -66,11 +66,12 @@ Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
 }%
 
 <verbatim class="foswikiHidden">
-%STARTSECTION{"examples"}%
+%STARTSECTION{"examples"}% 
 %JQREQUIRE{"loader"}%
-<form action="%SCRIPTURLPATH{"view"}%/%WEB%/%TOPIC%#Examples">
+<form id="loremForm" action="%SCRIPTURLPATH{"view"}%/%WEB%/%TOPIC%#Examples">
 
-*Corpus:* <select name="corpus" class="foswikiSelect">
+---+++ Corpus 
+<select name="corpus" class="foswikiSelect reload">
 <option %IF{"$'URLPARAM{corpus}'='classic'" then="selected"}%>classic</option>
 <option %IF{"$'URLPARAM{corpus}'='buzzwords'" then="selected"}%>buzzwords</option>
 <option %IF{"$'URLPARAM{corpus}'='cicero'" then="selected"}%>cicero</option>
@@ -79,10 +80,21 @@ Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
 <option %IF{"$'URLPARAM{corpus}'='office'" then="selected"}%>office</option>
 <option %IF{"$'URLPARAM{corpus}'='pulpfiction'" then="selected"}%>pulpfiction</option>
 </select>
-<button class='foswikiButton' type="submit" onclick="jQuery('.myloader1').trigger('refresh', {params: {'corpus':this.form.corpus.value}});return false;">Reload</button>
+<script>jQuery(function($) {
+   $(".reload").on("click", function() {
+      $(".myloader1").trigger('refresh', {
+         'corpus': this.value
+      });
+      return false;
+   });
+});
+</script>
 
-<div class="jqLoader myloader1" data-section="lorem" data-placeholder=""></div>
+<div class="jqLoader myloader1" data-section="lorem" data-placeholder="">
+%STARTSECTION{"lorem"}%%LOREM{type="paragraph" corpus="%URLPARAM{"corpus" default="classic"}%"}%%ENDSECTION{"lorem"}%
+</div>
 
+---+++ Images
 %LOREM{type="image" class="foswikiLeft"}%
 %LOREM{type="image" search="nature" class="foswikiLeft"}%
 %LOREM{type="image" search="people" class="foswikiLeft"}%
@@ -90,11 +102,7 @@ Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
 %LOREM{type="image" search="fruits" class="foswikiLeft"}%
 %LOREM{type="image" search="water" class="foswikiLeft"}%
 %CLEAR%
-
-</verbatim>
-
-<verbatim class="foswikiHidden">
-%STARTSECTION{"lorem"}%%LOREM{type="paragraph" corpus="%URLPARAM{"corpus"}%"}%%ENDSECTION{"lorem"}%
+%ENDSECTION{"examples"}%
 </verbatim>
 
 ---++ Installation Instructions
@@ -106,6 +114,7 @@ Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
 ---++ Change History
 
 %TABLE{columnwidths="7em" tablewidth="100%"}%
+|  30 Apr 2024 | improved the way sentences are extracted from a corpus |
 |  03 May 2022 | some memory fixes |
 |  28 Mar 2018 | initial release |
 
@@ -115,7 +124,7 @@ Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
 %META:FIELD{name="Release" title="Release" value="%25$RELEASE%25"}%
 %META:FIELD{name="Description" title="Description" value="%25$SHORTDESCRIPTION%25"}%
 %META:FIELD{name="Repository" title="Repository" value="https://github.com/foswiki/%25TOPIC%25"}%
-%META:FIELD{name="Copyright" title="Copyright" value="&copy; 2018-2022 Michael Daum"}%
+%META:FIELD{name="Copyright" title="Copyright" value="&copy; 2018-2024 Michael Daum"}%
 %META:FIELD{name="License" title="License" value="[[http://www.gnu.org/licenses/gpl.html][GPL (Gnu General Public License)]]"}%
 %META:FIELD{name="Home" title="Home" value="Foswiki:Extensions/%25TOPIC%25"}%
 %META:FIELD{name="Support" title="Support" value="Foswiki:Support/%25TOPIC%25"}%

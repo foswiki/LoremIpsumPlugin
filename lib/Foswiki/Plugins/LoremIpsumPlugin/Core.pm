@@ -1,6 +1,6 @@
 # Plugin for Foswiki - The Free and Open Source Wiki, http://foswiki.org/
 #
-# LoremIpsumPlugin is Copyright (C) 2013-2022 Michael Daum http://michaeldaumconsulting.com
+# LoremIpsumPlugin is Copyright (C) 2013-2024 Michael Daum http://michaeldaumconsulting.com
 #
 # Inspired by Text::Lorem Copyright (C) 2003 Fotango Ltd.
 #
@@ -77,15 +77,16 @@ sub LOREM {
 sub _sentences {
   my ($this, $corpus) = @_;
 
-  $corpus = DEFAULT_CORPUS unless $corpus;
+  $corpus //= DEFAULT_CORPUS;
 
   unless (defined $this->{sentences}{$corpus}) {
-    Foswiki::Func::readTemplate("loremipsum");
+   Foswiki::Func::readTemplate("loremipsum");
     
     my $data = Foswiki::Func::expandTemplate($corpus);
     throw Error::Simple("corpus not found") unless $data;
 
-    $this->{sentences}{$corpus} = [grep {!/^\s*$/} map { s/^\s+|\s+$//g; $_ } split(/[\.?!]+/, $data)];
+    #$this->{sentences}{$corpus} = [grep {!/^\s*$/} map { s/^\s+|\s+$//g; $_ } split(/[\.?!]+/, $data)];
+    $this->{sentences}{$corpus} = _extractSentences($data);
     throw Error::Simple("no words found") unless scalar(@{$this->{sentences}{$corpus}}); # never reach
   }
 
@@ -101,7 +102,7 @@ sub _numSentences {
 sub _words {
   my ($this, $corpus) = @_;
 
-  $corpus = DEFAULT_CORPUS unless $corpus;
+  $corpus //= DEFAULT_CORPUS;
 
   unless (defined $this->{wordlist}{$corpus}) {
     Foswiki::Func::readTemplate("loremipsum");
@@ -109,7 +110,7 @@ sub _words {
     my $data = Foswiki::Func::expandTemplate($corpus);
     throw Error::Simple("corpus not found") unless $data;
 
-    $this->{wordlist}{$corpus} = [map { s/[^\w'\-,]//g; lc($_) } split(/\s+/, $data)];
+    $this->{wordlist}{$corpus} = [map { my $tmp = $_; $tmp =~ s/[^\w'\-,]//g; lc($tmp) } split(/\s+/, $data)];
     throw Error::Simple("no words found") unless scalar(@{$this->{wordlist}{$corpus}}); # never reach
   }
 
@@ -262,5 +263,55 @@ sub _writeDebug {
   print STDERR "LoremIpsumPlugin::Core - $_[0]\n" if TRACE;
 }
 
+# from Text::Sentence
+sub _extractSentences {
+  my $text = shift;
+
+  return [] unless $text;
+
+  my $capital_letter = '[\p{Uppercase}]';
+  my $punctuation = '(?:\.|\!|\?)';
+
+  # this needs to be alternation, not character class, because of
+  # multibyte characters
+
+  my $opt_start_quote = q/['"]?/; # "'
+  my $opt_close_quote = q/['"]?/; # "'
+
+  # these are distinguished because (eventually!) I would like to do
+  # locale stuff on quote characters
+
+  my $opt_start_bracket = q/[[({]?/; # }{
+  my $opt_close_bracket = q/[\])}]?/;
+
+  my @sentences = $text =~ /
+    (
+                                # sentences start with ...
+        $opt_start_quote        # an optional start quote
+        $opt_start_bracket      # an optional start bracket
+        $capital_letter         # a capital letter ...
+        .+?                     # at least some (non-greedy) anything ...
+        $punctuation            # ... followed by any one of !?.
+        $opt_close_quote        # an optional close quote
+        $opt_close_bracket      # and an optional close bracket
+    )
+    (?=                         # with lookahead that it is followed by ...
+        (?:                     # either ...
+            \s+                 # some whitespace ...
+            $opt_start_quote    # an optional start quote
+            $opt_start_bracket  # an optional start bracket
+            $capital_letter     # an uppercase word character (for locale
+                                # sensitive matching)
+        |               # or ...
+            \n\n        # a couple (or more) of CRs
+        |               # or ...
+            \s*$        # optional whitespace, followed by end of string
+        )
+    )
+    /gxs
+    ;
+
+  return \@sentences;
+}
 
 1;
