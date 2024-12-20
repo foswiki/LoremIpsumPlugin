@@ -33,6 +33,8 @@ sub new {
     @_
   }, $class);
 
+  Foswiki::Func::readTemplate("loremipsum");
+
   return $this;
 }
 
@@ -80,7 +82,6 @@ sub _sentences {
   $corpus //= DEFAULT_CORPUS;
 
   unless (defined $this->{sentences}{$corpus}) {
-   Foswiki::Func::readTemplate("loremipsum");
     
     my $data = Foswiki::Func::expandTemplate($corpus);
     throw Error::Simple("corpus not found") unless $data;
@@ -105,7 +106,6 @@ sub _words {
   $corpus //= DEFAULT_CORPUS;
 
   unless (defined $this->{wordlist}{$corpus}) {
-    Foswiki::Func::readTemplate("loremipsum");
 
     my $data = Foswiki::Func::expandTemplate($corpus);
     throw Error::Simple("corpus not found") unless $data;
@@ -222,7 +222,7 @@ sub handle_image {
   my $search = $params->{search};
 
   if (defined $search) {
-    $search = '?'.$search;
+    $search = join(",", sort split(/\s*,\s*/, $search));
   } else {
     $search = 'random';
   }
@@ -242,9 +242,9 @@ sub handle_image {
 
   my $url;
   if ($search eq "random") {
-    $url = '//source.unsplash.com/random/$widthx$height';
+    $url = Foswiki::Func::expandTemplate("image::random");
   } else {
-    $url = '//source.unsplash.com/$widthx$height/$search';
+    $url = Foswiki::Func::expandTemplate("image::search");
   }
 
   $format =~ s/\$url/$url/g;

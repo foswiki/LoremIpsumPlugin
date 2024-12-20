@@ -2,5 +2,6 @@
 data/System/LoremIpsumPlugin.txt 0644
 lib/Foswiki/Plugins/LoremIpsumPlugin/Core.pm 0644
 lib/Foswiki/Plugins/LoremIpsumPlugin/DEPENDENCIES 0644
+lib/Foswiki/Plugins/LoremIpsumPlugin/MANIFEST 0644
 lib/Foswiki/Plugins/LoremIpsumPlugin.pm 0644
 templates/loremipsum.tmpl 0644

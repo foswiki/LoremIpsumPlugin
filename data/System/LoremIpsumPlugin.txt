@@ -1,4 +1,4 @@
-%META:TOPICINFO{author="ProjectContributor" comment="reprev" date="1712157058" format="1.1" version="1"}%
+%META:TOPICINFO{author="ProjectContributor" comment="" date="1734685675" format="1.1" version="1"}%
 ---+!! %TOPIC%
 %FORMFIELD{"Description"}%
 
@@ -17,7 +17,7 @@ This plugin allows you to generate dummy text and images of various kinds. There
 
 Additional corpoa may be added to the =loremipsum= template.
 
-In addition, this plugin allows to have placeholder images as well using the [[https://source.unsplash.com/][unsplash image service]]. See the examples below.
+In addition, this plugin allows to have placeholder images as well using the [[https://loremflickr.com/][LoremFlickr]]. See the examples below.
 
 ---++ What is Lorem Ipsum
 
@@ -36,7 +36,7 @@ Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
             <li> =sentences=: a list of =num= sentences </li> \
             <li> =paragraph=: a list of =min= to =max= sentences </li> \
             <li> =paragraphs=: a list of =num= paragraphs </li> \
-            <li> =image=: generates an &lt;img ...> tag using https://source.unsplash.com </li> \
+            <li> =image=: generates an &lt;img ...> tag using https://loremflickr.com </li> \
             </ul> | paragraph |
 | =corpus= | name of word list as defined in the =loremipsum= template; known default corpus are: \
             =buzzwords=, \
@@ -114,6 +114,7 @@ Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
 ---++ Change History
 
 %TABLE{columnwidths="7em" tablewidth="100%"}%
+|  21 Oct 2024 | replaced unsplash with loremflickr as a random image provider |
 |  30 Apr 2024 | improved the way sentences are extracted from a corpus |
 |  03 May 2022 | some memory fixes |
 |  28 Mar 2018 | initial release |
