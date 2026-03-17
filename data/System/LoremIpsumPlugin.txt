@@ -1,4 +1,4 @@
-%META:TOPICINFO{author="ProjectContributor" comment="" date="1734685675" format="1.1" version="1"}%
+%META:TOPICINFO{author="ProjectContributor" comment="" date="1773767863" format="1.1" version="1"}%
 ---+!! %TOPIC%
 %FORMFIELD{"Description"}%
 
@@ -114,6 +114,7 @@ Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
 ---++ Change History
 
 %TABLE{columnwidths="7em" tablewidth="100%"}%
+|  17 Mar 2026 | replaced loremflickr with picsum.photos |
 |  21 Oct 2024 | replaced unsplash with loremflickr as a random image provider |
 |  30 Apr 2024 | improved the way sentences are extracted from a corpus |
 |  03 May 2022 | some memory fixes |
@@ -125,7 +126,7 @@ Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
 %META:FIELD{name="Release" title="Release" value="%25$RELEASE%25"}%
 %META:FIELD{name="Description" title="Description" value="%25$SHORTDESCRIPTION%25"}%
 %META:FIELD{name="Repository" title="Repository" value="https://github.com/foswiki/%25TOPIC%25"}%
-%META:FIELD{name="Copyright" title="Copyright" value="&copy; 2018-2024 Michael Daum"}%
+%META:FIELD{name="Copyright" title="Copyright" value="&copy; 2018-2026 Michael Daum"}%
 %META:FIELD{name="License" title="License" value="[[http://www.gnu.org/licenses/gpl.html][GPL (Gnu General Public License)]]"}%
 %META:FIELD{name="Home" title="Home" value="Foswiki:Extensions/%25TOPIC%25"}%
 %META:FIELD{name="Support" title="Support" value="Foswiki:Support/%25TOPIC%25"}%

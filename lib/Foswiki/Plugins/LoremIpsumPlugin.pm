@@ -1,6 +1,6 @@
 # Plugin for Foswiki - The Free and Open Source Wiki, http://foswiki.org/
 #
-# LoremIpsumPlugin is Copyright (C) 2013-2024 Michael Daum http://michaeldaumconsulting.com
+# LoremIpsumPlugin is Copyright (C) 2013-2026 Michael Daum http://michaeldaumconsulting.com
 #
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -20,7 +20,7 @@ use warnings;
 
 use Foswiki::Func ();
 
-our $VERSION = '1.10';
+our $VERSION = '1.20';
 our $RELEASE = '%$RELEASE%';
 our $SHORTDESCRIPTION = 'Lorem ipsum generator';
 our $LICENSECODE = '%$LICENSECODE%';

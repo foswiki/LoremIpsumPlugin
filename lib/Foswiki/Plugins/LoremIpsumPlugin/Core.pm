@@ -1,6 +1,6 @@
 # Plugin for Foswiki - The Free and Open Source Wiki, http://foswiki.org/
 #
-# LoremIpsumPlugin is Copyright (C) 2013-2024 Michael Daum http://michaeldaumconsulting.com
+# LoremIpsumPlugin is Copyright (C) 2013-2026 Michael Daum http://michaeldaumconsulting.com
 #
 # Inspired by Text::Lorem Copyright (C) 2003 Fotango Ltd.
 #
